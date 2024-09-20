@@ -1,22 +1,25 @@
-    n = len(arr)
-    left = 0
-    right = n - 1
-    left_max = 0
-    right_max = 0
-    water = 0
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        n = len(height)
+        left = 0
+        right = n - 1
+        left_max = 0
+        right_max = 0
+        water = 0
 
-    while left <= right:
-        if left_max <= right_max:
-            if arr[left] >= left_max:
-                left_max = arr[left]
+        while left <= right:
+            if left_max <= right_max:
+                if height[left] >= left_max:
+                    left_max = height[left]
+                else:
+                    water += left_max - height[left]
+                left += 1
             else:
-                water += left_max - arr[left]
-            left += 1
-        else:
-            if arr[right] >= right_max:
-                right_max = arr[right]
-            else:
-                water += right_max - arr[right]
-            right -= 1
+                if height[right] >= right_max:
+                    right_max = height[right]
+                else:
+                    water += right_max - height[right]
+                right -= 1
 
-    return water
+        return water
+        
