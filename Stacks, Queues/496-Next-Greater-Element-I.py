@@ -1,24 +1,22 @@
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
         stack = []
-        hashmap = {}
+        dic = {}
         output = []
 
         for i in reversed(nums2):
             while stack:
-                #found nearest greater element
                 if stack[-1] > i:
-                    hashmap[i] = stack[-1]
+                    dic[i] = stack[-1]
                     stack.append(i)
                     break
                 else: 
                     stack.pop()
             
-            #stack is empty initially or was popped till empty
             if not stack:
-                hashmap[i] = -1
+                dic[i] = -1
                 stack.append(i)
         
         for j in nums1:
-            output.append(hashmap[j])
+            output.append(dic[j])
         return output
