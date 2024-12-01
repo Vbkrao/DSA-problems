@@ -1,19 +1,18 @@
+from collections import defaultdict
 class Solution:
     def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
-        one_idxs = [-1]
-        for [i, num] in enumerate(nums):
-            if num == 1:
-                one_idxs.append(i)
-        one_idxs.append(len(nums))
+        prefixSumMap = defaultdict(int)
+        prefixSumMap[0] = 1
+        currentSum = 0
+        ans = 0
 
-        result = 0
-        for i in range(1, len(one_idxs) - goal):
-            if goal == 0:
-                num_of_zero = (one_idxs[i] - one_idxs[i - 1]) - 1
-                result += int((num_of_zero * (num_of_zero + 1)) / 2)
-            else:
-                num_of_start_zero = (one_idxs[i] - one_idxs[i - 1]) - 1
-                num_of_end_zero = (one_idxs[i + goal] - one_idxs[i - 1 + goal]) - 1
-                result += (num_of_start_zero + 1) * (num_of_end_zero + 1)
+        for num in nums:
+            currentSum += num
 
-        return result
+            if (currentSum - goal) in prefixSumMap:
+                ans += prefixSumMap[currentSum - goal]
+
+            prefixSumMap[currentSum] += 1
+
+        return ans
+
